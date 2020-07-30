@@ -1,5 +1,23 @@
-<div class="center jumbotron">
-  <div class="text-center">
-    <h1>Welcome to the Poster</h1>
+<% if logged_in? %>
+  <div class="row">
+    <aside class="col-sm-4">
+      <%= form_with(model: @simplepost, local: true) do |f| %>
+        <div class="form-group">
+          <%= f.text_area :content, class: 'form-control', rows: 5 %>
+        </div>
+        <%= f.submit 'Post', class: 'btn btn-secondary btn-block' %>
+      <% end %>
+    </aside>
+    <div class="col-sm-8">
+      <%= render 'simpleposts/simpleposts', simpleposts: @simpleposts %>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>Welcome to the SimplePosts</h1>
+      <%= link_to 'ログイン', login_path, class: 'btn btn-lg btn-secondary' %>
+      <p class = "mt-2">未登録の方は<%= link_to 'こちら', signup_path %></p>
+    </div>
+  </div>
+<% end %>
