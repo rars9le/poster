@@ -5,4 +5,11 @@ class Simplepost < ApplicationRecord
     
   has_many :favorites, dependent: :destroy
   has_many :favoriter, through: :favorites, source: :users
+  
+  #Like検索,ない場合は全てを返す
+  def self.search(search)
+    return Simplepost.all unless search
+    Simplepost.where(['content LIKE ?', "%#{search}%"])
+  end
+  
 end

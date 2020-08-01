@@ -20,6 +20,10 @@ class SimplepostsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def search
+    @simpleposts = Simplepost.search(params[:search]).page(params[:page])
+  end
+
   private
 
   def simplepost_params
@@ -32,4 +36,5 @@ class SimplepostsController < ApplicationController
       redirect_to root_url
     end
   end
+
 end

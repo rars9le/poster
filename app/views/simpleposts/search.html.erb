@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+
+    <label for="keywordSearch">キーワード検索</label>
+    <%= form_tag(search_simpleposts_path,:method => 'get') do %>
+      <div class="form-group">
+      <%= text_field_tag :search %>
+      <%= submit_tag '検索', class: 'btn btn-secondary', :name => nil %>
+      </div>
+    <% end %>
+    
+    <ul class="list-unstyled mt-3">
+      <% @simpleposts.each do |simplepost| %>
+        <li class="media mb-3">
+          <img class="mr-2 rounded" src="<%= gravatar_url(simplepost.user, { size: 50 }) %>" alt="">
+          <div class="media-body">
+            <div>
+              <%= link_to simplepost.user.name, user_path(simplepost.user) %> <span class="text-muted"><%= "@" + simplepost.user.alias_name %> <%= simplepost.created_at.to_s(:datetime_jp) %></span>
+            </div>
+            <div>
+              <p class="mb-0"><%= simplepost.content %></p>
+            </div>
+            <div class ="d-flex flex-row">
+              <div>
+                <% if current_user == simplepost.user %>
+                  <%= link_to "Delete", simplepost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+                <% end %>
+              </div>
+              <div class="ml-1">
+                <% if current_user.likes?(simplepost) %>
+                  <%= form_with(model: current_user.favorites.find_by(simplepost_id: simplepost.id), local: true, method: :delete) do |f| %>
+                    <%= hidden_field_tag :simplepost_id, simplepost.id %>
+                    <%= f.submit 'unLike', class: 'btn btn-danger btn-sm' %>
+                  <% end %>
+                <% else %>
+                  <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
+                    <%= hidden_field_tag :simplepost_id, simplepost.id %>
+                    <%= f.submit 'Like', class: 'btn btn-primary btn-sm' %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+      <%= paginate @simpleposts %>
+    </ul>
+    
+  </div>
+</div>

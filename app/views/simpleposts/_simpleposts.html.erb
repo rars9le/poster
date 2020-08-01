@@ -4,7 +4,7 @@
       <img class="mr-2 rounded" src="<%= gravatar_url(simplepost.user, { size: 50 }) %>" alt="">
       <div class="media-body">
         <div>
-          <%= link_to simplepost.user.name, user_path(simplepost.user) %> <span class="text-muted">posted at <%= simplepost.created_at %></span>
+          <%= link_to simplepost.user.name, user_path(simplepost.user) %> <span class="text-muted"><%= "@" + simplepost.user.alias_name %> <%= simplepost.created_at.to_s(:datetime_jp) %></span>
         </div>
         <div>
           <p class="mb-0"><%= simplepost.content %></p>
