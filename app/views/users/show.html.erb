@@ -5,7 +5,9 @@
     <div class="col-sm-3 offset-2 mt-2 mb-2">
       <h4><%= @user.name %> @<%= @user.alias_name %><h4>
       <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 200 }) %>" alt="">
-      <%= render 'relationships/follow_button', user: @user %>
+      <div class="mt-2">
+        <%= render 'relationships/follow_button', user: @user %>
+      </div>
     </div>
       
     <div class="col-sm-5">
@@ -13,7 +15,7 @@
         <p><%= @user.self_introduction %></p>
       </div>
       <div class="">
-        <%= link_to "プロフィール編集", edit_user_path, class: 'btn btn-secondary btn-sm' %>
+        <%= render 'users/edit_profile_button', user: @user  %>
       </div>
     </div>
   </div>
