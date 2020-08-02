@@ -9,7 +9,7 @@
       <%= render 'layouts/error_messages', model: f.object %>
       
       <div class="form-group">
-        <%= f.label :alias_name, 'ID' %>
+        <%= f.label :alias_name, 'ID ※英数アンダーバー(_) 5～15桁' %>
         <%= f.text_field :alias_name, class: 'form-control' %>
       </div>
       
