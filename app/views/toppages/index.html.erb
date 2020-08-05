@@ -3,9 +3,9 @@
     <aside class="col-sm-4">
       <%= form_with(model: @simplepost, local: true) do |f| %>
         <div class="form-group">
-          <%= f.text_area :content, class: 'form-control', rows: 5 %>
+          <%= f.text_area :content, class: 'form-control', rows: 5, placeholder: "いま何してる？" %>
         </div>
-        <%= f.submit 'Post', class: 'btn btn-secondary btn-block' %>
+        <%= f.submit '投稿', class: 'btn btn-secondary btn-block' %>
       <% end %>
     </aside>
     <div class="col-sm-8">

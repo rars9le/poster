@@ -10,13 +10,13 @@
         <%= render 'relationships/follow_button', user: @user %>
       </div>
     </div>
-      
-    <div class="col-sm-5">
-      <div>
-        <p><%= @user.self_introduction %></p>
-      </div>
-      <div class="">
-        <%= render 'users/edit_profile_button', user: @user  %>
-      </div>
+    <div class="col-sm-5 mt-4">
+      <p><%= simple_format(@user.self_introduction) %></p>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="offset-8 mb-1">
+      <%= render 'users/edit_profile_button', user: @user  %>
     </div>
   </div>
