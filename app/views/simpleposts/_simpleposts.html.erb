@@ -1,7 +1,11 @@
 <ul class="list-unstyled">
   <% simpleposts.each do |simplepost| %>
     <li class="media mb-3">
-      <img class="mr-2 rounded" src="<%= gravatar_url(simplepost.user, { size: 50 }) %>" alt="">
+      <% if simplepost.user.image? %>
+        <img class="mr-2 rounded icon" src='<%= simplepost.user.image %>' width="50px" height="50px" alt="ユーザーアイコン">
+      <% else %>
+        <image src="/assets/default.png" class=" mr-2 rounded icon" width="50px" height="50px" alt="ユーザーアイコン" %>
+      <% end %>
       <div class="media-body">
         <div>
           <%= link_to simplepost.user.name, user_path(simplepost.user) %> <span class="text-muted"><%= "@" + simplepost.user.alias_name %> <%= simplepost.created_at.to_s(:datetime_jp) %></span>
@@ -12,19 +16,21 @@
         <div class ="d-flex flex-row">
           <div>
             <% if current_user == simplepost.user %>
-              <%= link_to "Delete", simplepost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+              <%= link_to simplepost, :method => :delete, :data => { confirm: "削除しますか?" }, :class =>"btn btn-default btn-sm" do %>
+                <i class="far fa-trash-alt"></i> 
+              <% end %>
             <% end %>
           </div>
           <div class="ml-1">
             <% if current_user.likes?(simplepost) %>
               <%= form_with(model: current_user.favorites.find_by(simplepost_id: simplepost.id), local: true, method: :delete) do |f| %>
                 <%= hidden_field_tag :simplepost_id, simplepost.id %>
-                <%= f.submit 'unLike', class: 'btn btn-danger btn-sm' %>
+                <%= button_tag '<i class="far fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
               <% end %>
             <% else %>
               <%= form_with(model: current_user.favorites.build, local: true) do |f| %>
                 <%= hidden_field_tag :simplepost_id, simplepost.id %>
-                <%= f.submit 'Like', class: 'btn btn-primary btn-sm' %>
+                <%= button_tag '<i class="fas fa-heart"></i>'.html_safe, :type => "submit", :class =>"btn btn-default btn-sm" %>
               <% end %>
             <% end %>
           </div>
